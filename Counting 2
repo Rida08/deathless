@@ -16,11 +16,10 @@
 			cin >> x[i];
 			long l = 0, r = n, m = r / 2;
 			while (r - l != 1) {
-				a[m] > x[i] ? r = m : l = m;
+				a[m] >= x[i] ? r = m : l = m;
 				m = (l + r) / 2;
 			}
 			an += to_string(n - r) + "\n";
 		}
 		cout << an;
 	}
-
