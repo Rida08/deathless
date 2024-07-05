@@ -1,1 +1,36 @@
 
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+long long gcd(long long a, long long b)
+{
+	if (b == 0)
+		return a;
+	return gcd(b, a % b);
+}
+int main()
+{
+	long long a, b, q;
+	std::cin >> a >> b >> q;
+	long long* l = new long long[q];
+	long long* h = new long long[q];
+	for (int i = 0; i < q; ++i)
+		std::cin >> l[i]>>h[i];
+	for (int j = 0; j <	q; ++j)
+	{
+		
+		long long gc = -1;
+		while (gc < l[j])
+		{
+			gc = gcd(a, b);
+			a /= gc;
+			b /= gc;
+		}
+		if (gc > h[j])
+			gc = -1;
+		std::cout << gc << "\n";
+	}
+
+}
+
