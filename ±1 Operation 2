@@ -1,1 +1,22 @@
+	#include <iostream>
+	#include <string>
+	#include <algorithm>
+	#include <vector>
+	using namespace std;
+	int main()
+	{
+		long n, q, x, l;
+		cin >> n >> q;
+		long* a = new long[n];
+		//long* x = new long[q];
+		for (int i = 0; i < n; ++i) cin >> a[i];
+		string an = "";
+		for (int i = 0; i < q; ++i) {
+			l = 0;
+			cin >> x;
+			for (int i = 0; i < n; ++i)		l += abs(a[i] - x);
+			an += to_string(l) + "\n";
+		}
+		cout << an;
+	}
 
