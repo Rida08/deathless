@@ -1,1 +1,36 @@
+	#include <iostream>
+	#include <string>
+	#include <algorithm>
+	#include <vector>
+	#include <set>
+	using namespace std;
+    using ll = long long;
+	int gcd(int a, int b) {
+		if (!b) {
+			return a;
+		}
+		return gcd(b, a % b);
+	}
+    int main(){
+		multiset<ll> ms;
+		ll n, x;
+		cin >> n;
+		vector<ll>an(0, n);
+		for (int i = 0; i < n * n; ++i) {
+			cin >> x;
+			ms.insert(x);
+		}
+		sort(begin(ms), end(ms));
+		an[n - 1] = *ms.rbegin();
+		ms.erase(*ms.rbegin());
+		an[n - 2] = *ms.rbegin();
+		for (int i = n - 3; i >= 0; --i) {
+			for (int j = i + 1; j < n-1; ++j) {
+				ms.erase(ms.find(gcd(an[i], an[i+1])));
+				ms.erase(ms.find(gcd(an[i], an[i + 1])));
+			}
+			an[i]= *ms.rbegin();
+		}
+		for (int i = 0; i < n; ++i) cin >> an[i];
+    }
 
