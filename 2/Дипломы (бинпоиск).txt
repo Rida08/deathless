@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	int w, h, n;
+	cin >> w >> h >> n;
+	long long l = 0, r = 1e9, m = r / 2;
+	while (r - l != 1) {
+		(m / w)* (m / h) > n ? r = m : l = m;
+		m = (r + l) / 2;
+	}
+	cout << r;
+
+}

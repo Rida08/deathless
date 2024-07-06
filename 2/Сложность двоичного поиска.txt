@@ -1,0 +1,20 @@
+#include <iostream>
+#include <string>
+
+int main()
+{
+    int n, k;
+    std::cin >> n;
+    int c = 0;
+        int l = 0, r = n, m=n/2;
+        while (r - l > 1)
+        {
+            if (m < n)
+                l = m;
+            else
+                r = m;
+            c++;
+            m = (l + r) / 2;
+        }
+    std::cout << c;
+}

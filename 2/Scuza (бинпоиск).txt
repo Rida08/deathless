@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+int main()
+{
+	long long t;
+	std::cin >> t;
+	std::string an;
+	for (long long i = 0; i < t; i++) {
+		long long n, q;
+		std::cin >> n >> q;
+		long long* a = new long long[n];
+		long long* k = new long long[q];
+		for (long long j = 0; j < n; j++)	std::cin >> a[j];//разница в высотах
+		for (long long j = 0; j < q; j++)	std::cin >> k[j];//высота ноги
+		long long* pmax = new long long[n];
+		pmax[0] = a[0];
+		for (long long j = 1; j < n; j++)	pmax[j] = std::max(a[j], pmax[j - 1]);
+			for (long long k1 = 0; k1 < q; k1++) {
+				if (k[k1] < a[0]) an += "0 ";
+				else {
+					long long l = 0, r = n;
+					long long m = (r + l) / 2;
+					while (abs(r - l) != 1) {
+						pmax[m] > k[k1] ? r = m : l = m;
+						m = (r + l) / 2;
+					}
+					long long s = 0;
+					for (long long nn = 0; nn < r; nn++)	s += a[nn];
+					an = an + std::to_string(s) + " ";
+				}
+		}//конец одного запроса
+		an += "\n";
+		delete[] a;
+		delete[] k;
+		delete[] pmax;
+	}
+	std::cout << an;
+}
