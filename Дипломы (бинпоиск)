@@ -1,14 +1,25 @@
 #include <iostream>
+#include <string>
+#include <iostream>
 using namespace std;
-int main()
-{
-	int w, h, n;
+using ll = long long;
+bool check(ll w, ll h, ll n) {
+	if(h>1e10/w){
+		return true;
+	}
+	return h * w >= n;
+}
+int main(){
+	ll w, h, n;
 	cin >> w >> h >> n;
-	long long l = 0, r = 1e9, m = r / 2;
+	ll l = 0, r = 1e18, m = r / 2;
 	while (r - l != 1) {
-		(m / w)* (m / h) > n ? r = m : l = m;
+		if (check(m / w, m / h, n)) {
+			r = m;
+		}else {
+			l = m;
+		}
 		m = (r + l) / 2;
 	}
 	cout << r;
-
 }
