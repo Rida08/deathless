@@ -1,25 +1,45 @@
 #include <iostream>
+
 using namespace std;
-int main()
-{
-	int n, k;
-	cin >> n;
-	long long* a = new long long[n];
-	for (int i = 0; i < n; i++) cin >> a[i];
-	cin >> k;
-	long l = 0, r = 33000, m=r/2;
-	bool* b = new bool[n];
-	for (int i = 0; i < n; i++) b[i]=0;
-	while (r - l != 1){
-		int w = 0;
-		for (int i = 0, s=0; s < m; i++) {
-			if (b[i] != 1) {
-				s += b[i];
-				b[i] = 1;
-			}
+
+const int N = 10e4;
+
+int n, k, a[N];
+
+bool check(int t) {
+	int c = 1, l = 0;
+
+	for (int i = 0; i < n; ++i) {
+		if (a[i] > t) {
+			return false;
 		}
-		w > k ? l = m : r = m;
-		m = (l + r) / 2;
+		if (l + a[i] <= t) {
+			l += a[i];
+		}else {
+			++c;
+			l = a[i];
+		}
+	}
+	return c <= k;
+}
+
+int main(){
+	cin >> n;
+
+	for (int i = 0; i < n; i++) {
+		cin >> a[i];
+	}
+	cin >> k;
+			
+	long l = 0, r = 33000;
+
+	while (l + 1 < r){
+		long m = (l + r) / 2;
+		if (check(m)) {
+			r = m;
+		}else {
+			l = m;
+		}
 	}
 	cout << r;
 }
