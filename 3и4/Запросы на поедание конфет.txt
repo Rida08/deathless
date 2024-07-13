@@ -16,20 +16,24 @@ int main()
 		for (ll j = 0; j < n; ++j) cin >> a[j];
 		sort(a.begin(), a.end());
 		s[0] = a[0];
-		for (ll j = 1; j < n; ++j)	s[j]	= s[j - 1] + a[j];
+		for (ll j = 1; j < n; ++j)	s[j] = s[j - 1] + a[j];
 		for (ll j = 0; j < q; ++j) {
 			cin >> x;
-			if (s[n - 1] < x) an += "-1\n";
-			else {
-				ll r = n, l = 0, ii=0;
-				while (/*l + 1 < r*/ii<60) {
+			if(s[n - 1] < x){
+				an += "-1\n";
+			}else{
+				ll r = n+1, l = -1;
+				while (l + 1 < r) {
 					ll m = (l + r) / 2;
-					s[m] > x ? r = m : l = m;
-					ii++;
+					if (s[m] >= x) {
+						r = m
+					}else {
+						l = m;
+					}
 				}
-				an += to_string(l-1) + "\n";
+				an += to_string(r) + "\n";
 			}
 		}
 	}
 	cout << an;
-}
+	}
