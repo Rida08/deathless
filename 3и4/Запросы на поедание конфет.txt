@@ -26,7 +26,7 @@ int main()
 				while (l + 1 < r) {
 					ll m = (l + r) / 2;
 					if (s[m] >= x) {
-						r = m
+						r = m;
 					}else {
 						l = m;
 					}
