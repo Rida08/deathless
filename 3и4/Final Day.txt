@@ -2,12 +2,13 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+
+using ll = long long;
 using namespace std;
-int main()
-{
-	int n, k,l;
+int main(){
+	int n, k, l;
 	cin >> n >> k;
-	vector<int> s(n, 0);
+	vector<ll> s(n, 0);
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < 3; ++j) {
 			cin >> l;
@@ -15,17 +16,16 @@ int main()
 		}
 	}
 	for (int i = 0; i < n; ++i) {
-		vector<int> s1;
-		copy(s.begin(), s.end(), back_inserter(s1));
+		vector<ll> s1;		
+		for (int j = 0; j < n; j++) {
+			s1.push_back(s[j]);
+		}
 		s1[i] += 300;
 		int a = s1[i];
-		sort(begin(s1), end(s1));
-		s1.resize(k);
-		auto p = find(s1.begin(), s1.end(), a);
-		if (p == s1.end())
-			cout << "YES\n";
+		sort(s1.rbegin(), s1.rend());
+		if (s1[k-1]<=a)
+			cout << "Yes\n";
 		else
-			cout << "NO\n";
+			cout << "No\n";
 	}
 }
-
