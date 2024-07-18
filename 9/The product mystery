@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+using ll = long long;
+
+ll gcd(ll a, ll b) {
+	if (!b) {
+		return a;
+	}
+	return gcd(b, a%b);
+}
+
+ll b, c;
+string an = "";
+
+void solve() {
+	cin >> b >> c;
+	ll g;
+	do{
+		g = gcd(b, c);
+		b /= g;
+		c /= g;
+	}while (g != 1);
+	an += to_string(c)+"\n";
+}
+
+int main(){
+	int t;
+	cin >> t;
+	for (int i = 0; i < t; ++i) {
+		solve();
+	}
+	cout << an;
+}
