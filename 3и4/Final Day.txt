@@ -5,7 +5,7 @@
 
 using ll = long long;
 using namespace std;
-int main(){
+int main() {
 	int n, k, l;
 	cin >> n >> k;
 	vector<ll> s(n, 0);
@@ -16,16 +16,14 @@ int main(){
 		}
 	}
 	for (int i = 0; i < n; ++i) {
-		vector<ll> s1;		
-		for (int j = 0; j < n; j++) {
-			s1.push_back(s[j]);
-		}
-		s1[i] += 300;
-		int a = s1[i];
-		sort(s1.rbegin(), s1.rend());
-		if (s1[k-1]<=a)
+		s[i] += 300;
+		int a = s[i];
+		sort(s.rbegin(), s.rend());
+		if (s[k - 1] <= a)
 			cout << "Yes\n";
 		else
 			cout << "No\n";
+		int z = *find(s.begin(), s.end(), a);
+		s[z] -= 300;
 	}
 }
