@@ -1,25 +1,51 @@
-	#include <iostream>
-	#include <string>
-	#include <algorithm>
-	#include <vector>
-	using namespace std;
-	int main()
-	{
-		long n, q;
-		cin >> n >> q;
-		vector<int>a(n,0);
-		long* x = new long[q];
-		for (int i = 0; i < n; ++i) cin >>a[i];
-		sort(begin(a), end(a));
-		string an = "";
-		for (int i = 0; i < q; ++i) {
-			cin >> x[i];
-			long l = 0, r = n, m = r / 2;
-			while (r - l != 1) {
-				a[m] >= x[i] ? r = m : l = m;
-				m = (l + r) / 2;
-			}
-			an += to_string(n - r) + "\n";
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+using ll = long long;
+
+ll n, q, x;
+string an = "";
+vector<ll>a;
+
+void solve(){
+	ll l = 0, r = n-1;
+	while (r - l != 1) {
+		ll m = (l + r) / 2;
+		if (a[m] >= x){
+			l = m;
 		}
-		cout << an;
+		else {
+			r = m;
+		}
 	}
+	if (r < n - 1 && a[r + 1] > x) {
+		an += to_string(r+1) + "\n";
+	}else {
+		an += to_string(r) + "\n";
+	}
+}
+
+int main(){
+	cin >> n >> q;
+	ll c;
+	for (int i = 0; i < n; ++i) {
+		cin >> c;
+		a.push_back(c);
+	}
+	sort(rbegin(a), rend(a));
+	for (int i = 0; i < q; ++i) {
+		cin >> x;
+		if (a[0] < x) {
+			an += "0\n";
+		}
+		else if (a[n-1]>=x) {
+			an += to_string(n) + "\n";
+		}else {
+			solve();
+		}
+	}
+	cout << an;
+}
