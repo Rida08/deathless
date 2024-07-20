@@ -1,39 +1,49 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
-int main()
-{
-	long long t;
-	std::cin >> t;
-	std::string an;
-	for (long long i = 0; i < t; i++) {
-		long long n, q;
-		std::cin >> n >> q;
-		long long* a = new long long[n];
-		long long* k = new long long[q];
-		for (long long j = 0; j < n; j++)	std::cin >> a[j];//разница в высотах
-		for (long long j = 0; j < q; j++)	std::cin >> k[j];//высота ноги
-		long long* pmax = new long long[n];
-		pmax[0] = a[0];
-		for (long long j = 1; j < n; j++)	pmax[j] = std::max(a[j], pmax[j - 1]);
-			for (long long k1 = 0; k1 < q; k1++) {
-				if (k[k1] < a[0]) an += "0 ";
-				else {
-					long long l = 0, r = n;
-					long long m = (r + l) / 2;
-					while (abs(r - l) != 1) {
-						pmax[m] > k[k1] ? r = m : l = m;
-						m = (r + l) / 2;
-					}
-					long long s = 0;
-					for (long long nn = 0; nn < r; nn++)	s += a[nn];
-					an = an + std::to_string(s) + " ";
-				}
-		}//конец одного запроса
-		an += "\n";
-		delete[] a;
-		delete[] k;
-		delete[] pmax;
+#include <vector>
+using namespace std;
+using ll = long long;
+long long n, q;
+std::string an;
+void solve() {
+	cin >> n >> q;
+	vector<ll> a(n), k(q), pmax(n), psum(n);
+	for (int j = 0; j < n; j++) {
+		std::cin >> a[j];
 	}
-	std::cout << an;
+	for (int j = 0; j < q; j++) {
+		std::cin >> k[j];
+	}
+	pmax[0] = a[0];
+	psum[0] = a[0];
+	for (int j = 1; j < n; j++) {
+		pmax[j] = max(a[j], pmax[j - 1]);
+		psum[j] = psum[j - 1] + a[j];
+	}
+	for (int i = 0; i < q; i++) {
+		if (k[i] < a[0]) {
+			an += "0 ";
+			continue;
+		}
+		int l = -1, r = n;
+		while (l + 1 < r) {
+			int m = (r + l) / 2;
+			if (pmax[m] > k[i]) {
+				r = m;
+			}else {
+				l = m;
+			}
+		}
+		an+=to_string(psum[l]) + " ";
+	}
+	an += "\n";
+}
+int main(){
+	int t;
+	cin >> t;
+	for (int i = 0; i < t; i++) {
+		solve();
+	}
+	cout << an;
 }
