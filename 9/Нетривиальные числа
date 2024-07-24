@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using ll = long long;
+using namespace std;
+
+const int N = 1e4 * 4;
+bool used[N];
+vector<int>primes;
+
+ll a, b;
+
+
+int main() {
+	cin >> a >> b;
+	vector<double> m;
+	for (int x1 = b; x1 >= a; --x1) {
+		double s = 0;
+		if (find(primes.begin(), primes.end(), x1) != primes.end()) {
+			m.push_back(x1);
+			x1 = a - 1;
+		}
+		else {
+			for (int i = 1; i < x1; ++i) {
+				if (x1 % i == 0)
+					s += i;
+			}
+			m.push_back(s / x1);
+		}
+	}
+	vector<double>m1 = m;
+	sort(m.begin(), m.end());
+	auto c = find(m1.begin(), m1.end(), m[0]);
+	int n = c - m1.begin();
+	n = b - n;
+	cout << n;
+}
