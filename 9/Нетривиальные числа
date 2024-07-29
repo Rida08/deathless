@@ -6,7 +6,7 @@
 using ll = long long;
 using namespace std;
 
-const int N = 1e6+1;
+const int N = 1e6 + 1;
 bool used[N];
 vector<int>primes;
 
@@ -33,11 +33,11 @@ int main() {
 	for (int x1 = b; x1 >= a; --x1) {
 		double s = 0;
 		if (find(primes.begin(), primes.end(), x1) != primes.end()) {
-			m.push_back(1/x1);
+			m.push_back(1 / x1);
 			x1 = a - 1;
 		}
 		else {
-			for (int i = 1; i*i <= x1; ++i) {
+			for (int i = 1; i * i <= x1; ++i) {
 				if (x1 % i == 0) {
 					s += i;
 					if (i * i != x1) {
@@ -48,10 +48,19 @@ int main() {
 			m.push_back(s / x1);
 		}
 	}
-	vector<double>m1 = m;
-	sort(m.begin(), m.end());
-	auto c = find(m1.begin(), m1.end(), m[0]);
-	int n = c - m1.begin();
-	n = b - n;
-	cout << n;
+	//vector<double>m1 = m;
+	//sort(m.begin(), m.end());
+	//auto c = find(m1.begin(), m1.end(), m[0]);
+	//int n = c - m1.begin();
+	//n = b - n;
+	//cout << n;
+	double mi = m[0];
+	int c=0;
+	for (int i = 1; i < m.size(); ++i) {
+		if (mi > m[i]) {
+			c = i;
+			mi = m[i];
+		}
+	}
+	cout << b-c;
 }
