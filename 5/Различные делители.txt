@@ -1,1 +1,63 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
 
+using namespace std;
+using ll = long long;
+
+const int N = 1e5+1;
+
+int d, n=0;
+string an = "";
+
+bool used[N];
+vector<ll>primes;
+
+void res() {
+	used[1] = 1;
+	for (ll i = 2; i < N; ++i) {
+		if (used[i]) {
+			continue;
+		}
+		n++;
+		primes.push_back(i);
+		for (ll j = i * i; j < N; j += i) {
+			used[j] = 1;
+		}
+	}
+}
+
+void solve() {
+	cin >> d;
+	int l = -1, r = n - 1;
+	while (l + 1 < r) {
+		int m = (l + r) / 2;
+		if (primes[m] > d) {
+			r = m;
+		}else {
+			l = m;
+		}
+	}
+	int k = primes[r];
+	l = -1, r = n-1;
+	while (l + 1 < r) {
+		int m = (l + r) / 2;
+		if (primes[m] > d+k) {
+			r = m;
+		}else {
+			l = m;
+		}
+	}
+	an+=to_string(primes[r-1] * k)+ "\n";
+}
+
+int main() {
+	int t;
+	cin >> t;
+	res();
+	for (int i = 0; i < t; ++i) {
+		solve();
+	}
+	cout << an;
+}	
