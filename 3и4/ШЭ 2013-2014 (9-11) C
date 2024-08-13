@@ -1,0 +1,37 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+using ll = long long;
+
+int n, rez=0;
+vector<int>ax(n), ay(n);
+
+const int N = 101;
+
+bool used[N];
+
+void walk(int i) {
+	used[i] = 1;
+	rez++;
+	for (int j = 0; j < n; j++) {
+		if (ax[i] == ax[j] || ay[i] == ax[j] && !used[j]) {
+			walk(j);
+		}
+	}
+}
+
+int main(){
+	cin >> n;
+	int x, y;
+	for (int i = 0; i < n; ++i) {
+		cin >> x >> y;
+		ax.push_back(x), ay.push_back(y);
+	}
+	for (int i = 0; i < n; ++i) {
+		walk(i);
+	}
+	cout << rez;
+}	
