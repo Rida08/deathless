@@ -1,1 +1,19 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
 
+using namespace std;
+using ll = long long;
+
+const int A = 1e4;
+
+int div[A];
+
+int main(){
+	int n, m;
+	cin >> n >> m;
+	vector<ll>a(n), b(m);
+
+
+}	
