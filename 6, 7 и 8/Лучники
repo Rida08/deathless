@@ -1,1 +1,15 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
 
+using namespace std;
+using ll = long long;
+
+
+int main(){
+	double a, b, c, d;
+	cin >> a >> b >> c >> d;
+	double p = a / b, q = c / d;
+	cout << p / (1 - (1 - p)*(1 - q));
+}	
