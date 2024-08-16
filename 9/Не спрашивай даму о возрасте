@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using ll = long long;
+using namespace std;
+
+int main() {
+	string a;
+	cin >> a;
+	int d=0, ma=0;
+	for (int i = 0; i < a.length(); ++i) {
+		if ((char)a[i] <= 57 && (char)a[i] >= 48) {
+			d += (int)a[i]-48;
+			if (ma < (char)a[i]-48) {
+				ma = (int)a[i]-48;
+			}
+			continue;
+		}
+		d += (int)a[i] - 55;
+		if (ma < (char)a[i] - 55) {
+			ma = (int)a[i] - 55;
+		}
+	}
+	int t = 0;
+	for (int k = ma+1; k <= 36 && t!=1; ++k) {
+		if (d % (k - 1) == 0) {
+			cout << k;
+			t = 1;
+		}
+	}
+	if (t == 0) {
+		cout << "No solution";
+	}
+}
