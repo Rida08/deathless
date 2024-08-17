@@ -2,6 +2,7 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 using ll = long long;
@@ -13,7 +14,7 @@ void solve() {
 	double cnt = 0;
 	for (int i = 0; i < (1 << k); ++i) {
 		int an = b1;
-		for (int j = 0; j < (1 << k); ++j) {
+		for (int j = 0; j < k; ++j) {
 			if ((i >> j) & 1) {
 				an--;
 			}
@@ -25,32 +26,30 @@ void solve() {
 			cnt++;
 		}
 	}
-	cout << cnt <<" "<< ((1 << k));
+	cout << setprecision(11) <<fixed<< (double)cnt/((1 << k));
 }
 
-int main(){
+int main() {
 	cin >> a >> b;
-	for (int i = 0; i < a.length(); ++i){
+	for (int i = 0; i < a.length(); ++i) {
 		char n = a[i];
-		bool res = n == *"+";
+		bool res = n == '+';
 		if (res) {
 			a1++;
-		}else {
+		}
+		else {
 			a1--;
 		}
 		n = b[i];
-		res = n == *"+";
+		res = n == '+';
 		if (res) {
 			b1++;
-		}else if(n == *"-") {
+		}
+		else if (n == '-') {
 			b1--;
 		}else {
 			k++;
 		}
 	}
-	if (k == 0) {
-		cout << 1;
-	}else {
-		solve();
-	}
-}	
+	solve();
+}
