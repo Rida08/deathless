@@ -1,25 +1,22 @@
-	#include <iostream>
-	#include <string>
-	#include <algorithm>
-	#include <vector>
-	using namespace std;
-    using ll = long long;
-	ll gcd(ll a, ll b) {
-		if (!b) {
-			return a;
-		}
-		return gcd(b, a % b);
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+using ll = long long;
+ll gcd(ll a, ll b) {
+	if (!b) {
+		return a;
 	}
-    int main(){
-		int a, b, c, d;
-		cin >> a >> b >> c >> d;
-		ll an1 = a * b * c * d - min(a * d, b * c) * min(a * d, b * c);
-		ll an2 = a * b * c * d;
-		while (gcd(an1, an2) != 1) {
-			int g= gcd(an1, an2);
-			an1 /= g;
-			an2 /= g;
-		}
-		cout << an1 << "/" << an2;
-    }
-
+	return gcd(b, a % b);
+}
+int main() {
+	ll a, b, c, d;
+	cin >> a >> b >> c >> d;
+	ll an1 = a * b * c * d - min(a * d, b * c) * min(a * d, b * c);
+	ll an2 = a * b * c * d;
+	ll g = gcd(an1, an2);
+	an1 /= g;
+	an2 /= g;
+	cout << an1 << "/" << an2;
+}
