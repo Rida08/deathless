@@ -1,1 +1,51 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
 
+using namespace std;
+using ll = long long;
+
+const int A = 1e6 + 1;
+
+int mindiv[A];
+
+string an = "";
+
+ll gcd(ll a, ll b) {
+	if (!b) {
+		return a;
+	}
+	return gcd(b, a % b);
+}
+
+void resheto() {
+	fill_n(mindiv, A, A);
+	mindiv[1] = 1;
+	for (ll i = 2; i < A; ++i) {
+		if (mindiv[i] != A) {
+			continue;
+		}
+		mindiv[i] = i;
+		for (ll j = i * i; j < A; j += i) {
+			mindiv[j] = min<int>(i, mindiv[j]);
+		}
+	}
+}
+
+void solve() {
+	int n, k;
+	cin >> n >> k;
+	n += mindiv[n]+(k-1)*2;
+	an += to_string(n) + "\n";
+}
+
+int main() {
+	int t;
+	cin >> t;
+	resheto();
+	for (int i = 0; i < t; ++i) {
+		solve();
+	}
+	cout << an;
+}
