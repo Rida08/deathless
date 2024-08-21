@@ -1,0 +1,21 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+#include <iomanip>
+
+using ll = long long;
+using namespace std;
+
+int main() {
+	int x1, y1, r1, v1;
+	cin>> x1 >> y1 >> r1 >> v1;
+	int x2, y2, r2, v2;
+	cin >> x2 >> y2 >> r2 >> v2;
+	double d = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+	if (r1 + r2 >= d) {
+		cout <<setprecision(10)<<fixed<< 0;
+		return 0;
+	}
+	cout << setprecision(10) << fixed << (d - r1 - r2) / (v1 + v2);
+}
