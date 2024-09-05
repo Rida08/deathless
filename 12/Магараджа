@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+int n, k, s=0;
+vector<int>m1, m2;
+
+bool f(int r1, int c1, int r2, int c2){
+    if(r1==r2 || c1==c2 || abs(r1-r2)==abs(c1-c2)) return false;
+    if(abs((r1-r2)*(c1-c2))==2) return false;
+    return true;
+}
+
+bool check(int r, int c){
+    for(int i; i<m1.size(); ++i){
+        if(r==m1[i], c==m2[i]) continue;
+        if(f(r, c, m1[i], m2[i])) continue;
+        return false;
+    }
+    return true;
+}
+
+void bt(int i){
+    if(m1.size()==k || (i==n*n+1)){
+        s++;
+        return;
+    }
+    int r=i/n;
+    int c=i%n;
+    if(m1.size()<k && check(r, c)){
+        m1.push_back(r);
+        m2.push_back(c);
+        bt(i+1);
+        m1.pop_back();
+        m2.pop_back();
+    }
+    bt(i+1);
+}
+
+int main(){
+    cin>>n>>k;
+    bt(0);
+    cout<<s;
+}
