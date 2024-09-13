@@ -1,0 +1,57 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+
+
+using namespace std;
+using ll = long long;
+
+int k, kk=-1, s=0, n, m;
+vector<int>a1, a2, w1, w2, ans;
+
+void dt(int i){
+	if (i==n && s==k) {
+		int k1 = 0, k2=0;
+		for (int j = 0; j < a1.size(); ++j) {
+			if (binary_search(w1.begin(), w1.end(), a1[j]+1)&& binary_search(w1.begin(), w1.end(), a2[j]+1)){
+				k1++;
+			}
+			if (binary_search(w2.begin(), w2.end(), a1[j]+1) && binary_search(w2.begin(), w2.end(), a2[j]+1)) {
+				k2++;
+			}
+		}
+		if (k1+k2 > kk) {
+			//cout << k1 << k2;
+			kk = k1+k1;
+			ans = w1;
+		}
+		return;
+	}
+	w1.push_back(i);
+	s++;
+	dt(i + 1);
+	s--;
+	w1.pop_back();
+	w2.push_back(i);
+	//s++;
+	dt(i + 1);
+	//s--;
+	w2.pop_back();
+}
+
+int main() {
+	cin >> n >> k >> m;
+	for (int i = 0; i < m; ++i) {
+		int x, y;
+		cin >> x >> y;
+		a1.push_back(x), a2.push_back(y);
+	}
+	dt(0);
+	//cout << ans.size();
+	for (int i : ans) {
+		cout << i+1<<" ";
+	}
+	
+}
