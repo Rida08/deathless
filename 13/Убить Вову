@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cmath>
+
+using namespace std;
+using ll = long long;
+
+int n, m, a[20][20];
+bool us[20];
+bool k[20];
+
+vector<int>ans, an;
+
+void dt(int j, int p, int mi) {
+    if (j >= m || j < 0) return;//1
+    if (an.size() >= ans.size() && ans.size()!=0) return;//1
+
+    bool ch = 1;
+    for (int i = 0; i < n; ++i) if (k[i] == 0) ch = 0;
+    if (ch) {
+        if (ans.size() == 0) ans = an;
+        else if (an.size() < ans.size()) ans = an;
+        return;
+    }
+
+    if (an.size()+1 >= ans.size() && ans.size() != 0) return;//1
+    bool c = 0;
+    for (int j1 = 0; j1 < m; ++j1) if (us[j1] == 0) c = 1;//1
+    if (!c) return;
+
+    if (!us[j]) {
+        for (int i = 0; i < n; ++i)  if (a[i][j] == 0)  k[i] = 1;
+        an.push_back(j), us[j] = 1;
+        dt(j, 1, 1);
+        an.pop_back(), us[j] = 0;
+        for (int i = 0; i < n; ++i) if (a[i][j] == 0)  k[i] = 0;
+    }
+    bool c1 = 0, c2 = 0;
+    for (int i = 0; i < j; ++i)  if (us[i] == 0) c2 = 1;//1
+    for (int i = j; i < m; ++i)  if (us[i] == 0) c1 = 1;//1
+    if(p==1 && c1==1) dt(j+1, 1, 0);
+    if(mi==1 && c2==1) dt(j-1, 0, 1);
+}
+int main() {
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) cin >> a[i][j];
+    }
+    dt(0, 1, 1);
+    if (ans.size() == 0) cout << "Impossible";
+    else {
+        cout << ans.size()<<"\n";
+        for (int i = 0; i < ans.size(); ++i) {
+            cout << ans[i]+1 << " ";
+        }
+    }
+}
