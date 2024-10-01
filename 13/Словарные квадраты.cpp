@@ -7,32 +7,89 @@
 using namespace std;
 using ll = long long;
 
-int n, l;
-vector<string> a, f;
-string an;
+int n;
+vector<string> a, b;
 
-void dt(int i, string w) {
-    if (w.size()==4) {
-        if (w == a[0] || w == a[1] || w == a[2] || w == a[3] || w == a[4] || w == a[5] || w == a[6] || w == a[7]){
-            an = w;
+string ans[20], an1[20], an[20];
+
+const int N = 1e4;
+bool us[N], us1[N];
+
+void bt() {
+    bool c = 1;
+    for (int i = 0; i < n; ++i) if (an1[i] == "") c = 0;
+    if (c) {
+        bool ch = 1;
+        for (int i = 0; i < n; ++i) for (int j = i; j < n; ++j) if (an1[i][j] != an1[j][i]) ch = 0;
+        if (ch) {
+            for (int i = 0; i < n; ++i) ans[i] = an1[i];
         }
         return;
     }
-    if (i == 9 || i == -1 || w.size() == 5) return;
-    dt(i+1, w+f[i]);
-   // dt(i + 1, w);
-  //  dt(i - 1, w);
+    else {
+        bool ch = 1;
+        for (int i = 0; i < n; ++i) for (int j = i; j < n; ++j) {
+            if (an1[i] != "" && an1[j] != "") {
+                if (an1[i][j] != an1[j][i]) ch = 0;
+            }
+        }
+        if (ch == 0) return;
+    }
+    for (int i = 0; i < n; ++i) if (an1[i] == "") if(!us[i]){
+        us[i] = 1;
+        for (int j = 0; j < 2 * n; j++) if(!us1[j]){
+            us1[j] = 1, an1[i] = a[j];
+            bt();
+            an1[i] = "", us1[j] = 0;
+        }
+        us[i] = 0;
+    }
 }
-
+void dt() {
+    bool c = 1;
+    for (int i = 0; i < n; ++i) if (an1[i] == "") c = 0;
+    if (c) {
+        bool ch = 1;
+        for (int i = 0; i < n; ++i) for (int j = i; j < n; ++j) if (an1[i][j] != an1[j][i]) ch = 0;
+        if (ch) {
+            for (int i = 0; i < n; ++i) an[i] = an1[i];
+        }
+        return;
+    }
+    else {
+        bool ch = 1;
+        for (int i = 0; i < n; ++i) for (int j = i; j < n; ++j) {
+            if (an1[i] != "" && an1[j] != "") {
+                if (an1[i][j] != an1[j][i]) ch = 0;
+            }
+        }
+        if (ch == 0) return;
+    }
+    for (int i = 0; i < n; ++i) if (an1[i] == "") if (!us[i]) {
+        us[i] = 1;
+        for (int j = 0; j < n; j++) if (!us1[j]) {
+            us1[j] = 1, an1[i] = b[j];
+            bt();
+            an1[i] = "", us1[j] = 0;
+        }
+        us[i] = 0;
+    }
+}
 int main() {
     cin >> n;
     string x;
     for (int i = 0; i < 2 * n; ++i) {
         cin >> x;
         a.push_back(x);
-        f.push_back(to_string((char)x[0]));
     }
-    dt(0, "");
-    cout << an;
-    
+    bt();
+    for (int i = 0; i < 2 * n; ++i) {
+        if (find(ans, ans + 20, a[i]) == ans + 20) b.push_back(a[i]);
+    }
+    cout << "\n";
+    for (int i = 0; i < n; ++i) cout << ans[i] << "\n";
+    cout << "\n";
+    dt();
+    for (int i = 0; i < n; ++i) cout << ans[i] << "\n";
+
 }
