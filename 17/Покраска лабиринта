@@ -1,0 +1,44 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+
+using namespace std;
+using ll = long long;
+
+const int N = 54;
+const int dc[] = {0, 0, 1, -1};
+const int dr[] = {1, -1, 0, 0};
+
+int n, res = 0;
+bool used[N][N];
+string a[N];
+
+bool ok(int r, int c) {
+    return r >= 0 && r < n && c >= 0 && c < n && a[r][c] != '#';
+}
+
+void dfs(int r, int c) {
+    used[r][c] = 1;
+
+    for (int k = 0; k < 4; ++k) {
+        int rto = r + dr[k];
+        int cto = c + dc[k];
+        if (!ok(rto, cto)) {
+            ++res;
+        }
+        if (ok(rto, cto) && !used[rto][cto]) dfs(rto, cto);
+    }
+}
+
+int main() {
+    cin >> n;
+    for (int i = 0; i < n; ++i) cin >> a[i];
+    dfs(0, 0);
+    if (used[n - 1][n - 1] == 0) {
+        dfs(n - 1, n - 1);
+    }
+    cout << (res - 4) * 25;
+}
