@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+int n, m, c=1;
+const int N = 1e5 + 1;
+vector < int > a[N], b, an;
+bool used[N];
+
+void dfs(int u) {
+    b.push_back(u);
+    if(b.size()==n && c==1){
+    an=b;
+    c=0;
+    return;
+    }
+    used[u] = 1;
+    for (int v: a[u]) {
+        if (!used[v]) {
+            dfs(v);
+        }
+    }
+    b.pop_back();
+    used[u]=0;
+}
+
+int main() {
+    cin >> n >> m;
+    for (int i = 0; i < m; ++i) {
+        int x, y;
+        cin >> x >> y;
+        a[x].push_back(y), a[y].push_back(x);
+    }
+    for (int i = 1; i <= n; ++i) sort(a[i].begin(), a[i].end());
+    for (int i = 1; i <= n; ++i) {
+        dfs(i);
+    }
+    for(int i=0; i<an.size(); ++i) cout<<an[i]<<" ";
+}
