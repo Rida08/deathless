@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cmath>
+#include <queue>
+#include <cstring>
+
+using namespace std;
+using ll = long long;
+
+int n, m, q, k = 0;
+const int N = 1e3;
+vector < pair < int, int >> a[N];
+bool used[N];
+
+void dfs(int u, int c, int e) {
+    if (u == e) {
+        k++;
+        return;
+    }
+    used[u] = 1;
+    for (pair < int, int > v: a[u]) {
+        if (!used[v.first]) {
+           if (c == -1 || c == v.second) {
+            dfs(v.first, v.second, e);
+           }
+        }
+    }
+    used[u] = 0;
+}
+
+bool check(int u, pair<int, int>l) {
+	for (pair<int, int> v : a[u]) {
+		if (v == l) return false;
+	}
+	return true;
+}
+
+int main() {
+    cin >> n >> m;
+    int x, y, z;
+    pair < int, int > l;
+    for (int i = 0; i < m; ++i) {
+        cin >> x >> y >> z;
+        l.first = y, l.second = z;
+		if(check(x, l)) a[x].push_back(l);
+		l.first = x;
+		if (check(y, l)) a[y].push_back(l);
+
+    }
+    cin >> q;
+    for (int i = 0; i < q; ++i) {
+        cin >> x >> y;
+        k = 0;
+        memset(used, 0, N);
+        dfs(x, -1, y);
+        cout << k << "\n";
+    }
+}
