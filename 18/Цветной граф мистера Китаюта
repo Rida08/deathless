@@ -1,40 +1,25 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cmath>
-#include <queue>
-#include <cstring>
+#include <bits/stdc++.h>
 
 using namespace std;
 using ll = long long;
 
 int n, m, q, k = 0;
-const int N = 1e3;
+const int N = 1e2 + 1;
 vector < pair < int, int >> a[N];
 bool used[N];
+set < int > s1, s;
 
 void dfs(int u, int c, int e) {
-    if (u == e) {
-        k++;
+    if(u==e){
+        s.insert(c);
         return;
     }
     used[u] = 1;
     for (pair < int, int > v: a[u]) {
-        if (!used[v.first]) {
-           if (c == -1 || c == v.second) {
-            dfs(v.first, v.second, e);
-           }
+        if (!used[v.first] && v.second==c) {
+            dfs(v.first, c, e);
         }
     }
-    used[u] = 0;
-}
-
-bool check(int u, pair<int, int>l) {
-	for (pair<int, int> v : a[u]) {
-		if (v == l) return false;
-	}
-	return true;
 }
 
 int main() {
@@ -44,17 +29,22 @@ int main() {
     for (int i = 0; i < m; ++i) {
         cin >> x >> y >> z;
         l.first = y, l.second = z;
-		if(check(x, l)) a[x].push_back(l);
-		l.first = x;
-		if (check(y, l)) a[y].push_back(l);
+        a[x].push_back(l);
+        l.first = x;
+        a[y].push_back(l);
+        s1.insert(z);
 
     }
     cin >> q;
     for (int i = 0; i < q; ++i) {
         cin >> x >> y;
         k = 0;
-        memset(used, 0, N);
-        dfs(x, -1, y);
+        for (int j: s1) {
+            memset(used, 0, N);
+            dfs(x, j, y);
+            k+=s.size();
+            s.clear();
+        }
         cout << k << "\n";
     }
 }
