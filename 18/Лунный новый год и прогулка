@@ -3,26 +3,32 @@
 using namespace std;
 using ll = long long;
 
-int n, m, c=1;
+int n, m, c = 1;
 const int N = 1e5 + 1;
 vector < int > a[N], b, an;
+set < int > s;
 bool used[N];
 
 void dfs(int u) {
     b.push_back(u);
-    if(b.size()==n && c==1){
-    an=b;
-    c=0;
-    return;
+    if (b.size() == n && c == 1) {
+        an = b;
+        c = 0;
+        return;
     }
+    s.erase(u);
     used[u] = 1;
     for (int v: a[u]) {
         if (!used[v]) {
-            dfs(v);
+            s.insert(v);
         }
     }
-    b.pop_back();
-    used[u]=0;
+
+    for (int v: a[u]) {
+        if (!used[v]) {
+            dfs(*s.begin());
+        }
+    }
 }
 
 int main() {
@@ -36,5 +42,5 @@ int main() {
     for (int i = 1; i <= n; ++i) {
         dfs(i);
     }
-    for(int i=0; i<an.size(); ++i) cout<<an[i]<<" ";
+    for (int i = 0; i < an.size(); ++i) cout << an[i] << " ";
 }
