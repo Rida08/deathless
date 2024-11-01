@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+using ll = long long;
+
+struct Pair {
+    int a, b, c;
+};
+
+int n, m, k, an = 0;
+int c1, c2;
+
+const int N = 101;
+vector < Pair > a[N][N][N];
+bool used[N][N][N];
+
+void dfs1(int x, int y, int z, int j) {
+    used[x][y][z] = 1;
+    if (j == 2) {
+        c1++;
+        return;
+    }
+    for (Pair v: a[x][y][z]) {
+        if (!used[v.a][v.b][v.c]) {
+            dfs1(v.a, v.b, v.c, j++);
+        }
+    }
+}
+
+void dfs2(int x, int y, int z, int j, Pair l) {
+    used[x][y][z] = 1;
+    if (j == 2) {
+        c2++;
+        return;
+    }
+    for (Pair v: a[x][y][z]) {
+        if (!used[v.a][v.b][v.c] &&(x!=l.a || y!=l.b || y!=l.c)) {
+            dfs2(v.a, v.b, v.c, j++, l);
+        }
+    }
+}
+
+int main() {
+    int j;
+    cin >> n >> m >> k;
+    for (int i = 1; i <= n; ++i) {
+        for (int i1 = 1; i1 <= m; ++i1) {
+            for (int i2 = 1; i2 <= k; ++i2) {
+                cin >> j;
+                if (j == 0) continue;
+                a[i][i1][i2].emplace_back(i + 1, i1, i2);
+                a[i][i1][i2].emplace_back(i, i1 + 1, i2);
+                a[i][i1][i2].emplace_back(i, i1, i2 + 1);
+            }
+        }
+    }
+    for (int i = 1; i <= n; ++i) {
+        for (int i1 = 1; i1 <= m; ++i1) {
+            for (int i2 = 1; i2 <= k; ++i2) {
+                memset(used, 0, sizeof(used));
+                dfs1(i - 1, i1, i2, 0);
+                dfs1(i, i1 - 1, i2, 0);
+                dfs1(i, i1, i2 - 1, 0);
+                memset(used, 0, sizeof(used));
+                Pair l;
+                l.a=i, l.b=i1, l.c=i2;
+                dfs2(i-1, i1, i2, 0, l);
+                dfs2(i, i1-1, i2, 0, l);
+                dfs2(i, i1, i2-1, 0, l);
+                if (c1 != c2) an++;
+            }
+        }
+    }
+    cout << an;
+}
